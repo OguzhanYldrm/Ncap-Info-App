@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.ActivityNcap">
+
+
+
+    <include
+        android:id="@+id/ncap_toolbar"
+        layout="@layout/toolbar_ncap" />
+
+
+    <org.imaginativeworld.whynotimagecarousel.ImageCarousel
+        android:id="@+id/carousel"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_below="@+id/ncap_toolbar"
+        android:layout_margin="3dp"
+        app:autoWidthFixing="true"
+        app:bottomShadowAlpha="0.6"
+        app:carouselBackground="#FFF"
+        app:carouselType="SHOWCASE"
+        app:imagePlaceholder="@drawable/ic_picture"
+        app:imageScaleType="fitCenter"
+        app:imageViewId="@id/img"
+        app:itemLayout="@layout/item_carousel"
+        app:nextButtonId="@id/btn_next"
+        app:nextButtonLayout="@layout/next_button_layout"
+        app:nextButtonMargin="4dp"
+        app:previousButtonId="@id/btn_previous"
+        app:previousButtonLayout="@layout/previous_button_layout"
+        app:previousButtonMargin="4dp"
+        app:scaleOnScroll="false"
+        app:showBottomShadow="true"
+        app:showCaption="true"
+        app:showIndicator="true"
+        app:showNavigationButtons="true"
+        app:showTopShadow="true"
+        app:topShadowAlpha="0.6" />
+
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/carousel"
+        android:layout_margin="3dp">
+
+
+
+    </FrameLayout>
+
+</RelativeLayout>
