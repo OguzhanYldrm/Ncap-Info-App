@@ -29,6 +29,7 @@ public class NcapApi {
 
     private static final String BASE = "https://one.nhtsa.gov/webapi/api/SafetyRatings?format=json";
     private static final String ERROR = "";
+    private static final String NO_IMAGE_FOUND = "https://www.clicpeugeot.com/back/PhotoHandler.ashx?id=524566&prop=photo1&format=default";
 
     public static void getYears(final Activity activity) {
         AndroidNetworking.initialize(activity);
@@ -63,7 +64,7 @@ public class NcapApi {
 
                     @Override
                     public void onError(ANError anError) {
-                        System.out.println(anError.getMessage());
+                        
                     }
                 });
     }
@@ -237,7 +238,7 @@ public class NcapApi {
                             try {
                                 ncap.setVehiclePicture(NcapUtils.checkImage(jsonObject.getString("VehiclePicture")));
                             } catch (JSONException e) {
-                                ncap.setVehiclePicture("https://www.clicpeugeot.com/back/PhotoHandler.ashx?id=524566&prop=photo1&format=default");
+                                ncap.setVehiclePicture(NO_IMAGE_FOUND);
                                 e.printStackTrace();
                             }
                             try {
@@ -286,7 +287,7 @@ public class NcapApi {
                             try {
                                 ncap.setFrontCrashPicture(NcapUtils.checkImage(jsonObject.getString("FrontCrashPicture")));
                             } catch (JSONException e) {
-                                ncap.setFrontCrashPicture("https://www.clicpeugeot.com/back/PhotoHandler.ashx?id=524566&prop=photo1&format=default");
+                                ncap.setFrontCrashPicture(NO_IMAGE_FOUND);
                                 e.printStackTrace();
                             }
                             try {
@@ -329,8 +330,7 @@ public class NcapApi {
                             try {
                                 ncap.setSideCrashPicture(NcapUtils.checkImage(jsonObject.getString("SideCrashPicture")));
                             } catch (JSONException e) {
-                                ncap.setSideCrashPicture("https://www.clicpeugeot.com/back/PhotoHandler.ashx?id=524566&prop=photo1&format=default");
-                                System.out.println("ENTERED EXCEPTION");
+                                ncap.setSideCrashPicture(NO_IMAGE_FOUND);
                                 e.printStackTrace();
                             }
                             try {
@@ -349,7 +349,7 @@ public class NcapApi {
                             try {
                                 ncap.setSidePolePicture(NcapUtils.checkImage(jsonObject.getString("SidePolePicture")));
                             } catch (JSONException e) {
-                                ncap.setSidePolePicture("https://www.clicpeugeot.com/back/PhotoHandler.ashx?id=524566&prop=photo1&format=default");
+                                ncap.setSidePolePicture(NO_IMAGE_FOUND);
                                 e.printStackTrace();
                             }
                             try {
