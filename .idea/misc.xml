@@ -1,6 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_7" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.1425" />
+        <entry key="app/src/main/res/drawable/ic_launcher_background.xml" value="0.1425" />
+        <entry key="app/src/main/res/layout/activity_brand.xml" value="0.1685185185185185" />
+        <entry key="app/src/main/res/layout/activity_dashboard.xml" value="0.22777777777777777" />
+        <entry key="app/src/main/res/layout/activity_favourites.xml" value="0.12037037037037036" />
+        <entry key="app/src/main/res/layout/activity_model.xml" value="0.1685185185185185" />
+        <entry key="app/src/main/res/layout/activity_ncap.xml" value="0.1685185185185185" />
+        <entry key="app/src/main/res/layout/activity_splash.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/layout/activity_vehicle.xml" value="0.1685185185185185" />
+        <entry key="app/src/main/res/layout/activity_video.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/layout/fragment_front.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/layout/fragment_general.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/layout/fragment_side.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/layout/fragment_side_pole.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/layout/fragment_video.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/layout/item_brands.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/layout/item_favourites.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/layout/item_models.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/layout/item_text.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/layout/item_vehicles.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/layout/item_year.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/layout/toolbar_dashboard.xml" value="0.2212962962962963" />
+        <entry key="app/src/main/res/layout/toolbar_middlepages.xml" value="0.12037037037037036" />
+        <entry key="app/src/main/res/layout/toolbar_ncap.xml" value="0.12037037037037036" />
+        <entry key="app/src/main/res/menu/menu_dashboard.xml" value="0.12037037037037036" />
+        <entry key="app/src/main/res/menu/menu_middlepage.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/menu/menu_ncap.xml" value="0.22314814814814815" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1425" />
+        <entry key="app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1425" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -5,6 +5,4 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     app:title="EURONCAP"
-    app:subtitle="For Safer Cars">
-
-</androidx.appcompat.widget.Toolbar>
+    app:subtitle="For Safer Cars"/>

@@ -11,9 +11,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.ncap.ncapbilgi.R;
-import com.ncap.ncapbilgi.adaptor.VehicleAdaptor;
+import com.ncap.ncapbilgi.adapter.VehicleAdapter;
 import com.ncap.ncapbilgi.model.Vehicle;
 import com.ncap.ncapbilgi.service.NcapApi;
 
@@ -22,16 +29,28 @@ import java.util.ArrayList;
 public class ActivityVehicle extends AppCompatActivity {
 
     private static RecyclerView vehicleList;
-    private static VehicleAdaptor vehicleAdaptor;
+    private static VehicleAdapter vehicleAdapter;
     private static ArrayList<Vehicle> vehicles;
     private String modelYear;
     private String brand;
     private String model;
+    private AdView mAdView;
+    public static ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_vehicle);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         Intent intent = getIntent();
         modelYear = intent.getStringExtra("givenYear");
@@ -66,16 +85,19 @@ public class ActivityVehicle extends AppCompatActivity {
         vehicleList.setLayoutManager(layoutManager);
         vehicleList.setItemAnimator(new DefaultItemAnimator());
 
+        progressBar = findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
         NcapApi.getVehicleId(ActivityVehicle.this,modelYear,brand,model);
 
     }
 
     public static void setVehicles(Activity activity, ArrayList<Vehicle> givenVehicles) {
+        progressBar.setVisibility(View.GONE);
         vehicles = new ArrayList<>(givenVehicles);
-        vehicleAdaptor = new VehicleAdaptor(activity,vehicles);
-        vehicleList.setAdapter(vehicleAdaptor);
+        vehicleAdapter = new VehicleAdapter(activity,vehicles);
+        vehicleList.setAdapter(vehicleAdapter);
 
-        vehicleAdaptor.notifyDataSetChanged();
+        vehicleAdapter.notifyDataSetChanged();
 
     }
 }

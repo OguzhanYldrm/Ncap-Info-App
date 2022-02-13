@@ -1,6 +1,9 @@
 package com.ncap.ncapbilgi.service;
 
 import android.app.Activity;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import com.androidnetworking.AndroidNetworking;
 import com.androidnetworking.common.Priority;
@@ -27,9 +30,8 @@ import java.util.List;
 
 public class NcapApi {
 
-    private static final String BASE = "https://one.nhtsa.gov/webapi/api/SafetyRatings?format=json";
+    private static final String BASE = "https://api.nhtsa.gov/SafetyRatings";
     private static final String ERROR = "";
-    private static final String NO_IMAGE_FOUND = "https://www.clicpeugeot.com/back/PhotoHandler.ashx?id=524566&prop=photo1&format=default";
 
     public static void getYears(final Activity activity) {
         AndroidNetworking.initialize(activity);
@@ -64,7 +66,9 @@ public class NcapApi {
 
                     @Override
                     public void onError(ANError anError) {
-                        
+
+                        Toast.makeText(ActivityMain.progressBar.getContext(),"Upps! An Error Occured.", Toast.LENGTH_SHORT).show();
+                        ActivityMain.progressBar.setVisibility(View.GONE);
                     }
                 });
     }
@@ -72,8 +76,7 @@ public class NcapApi {
     public static void getBrands(final Activity activity, String modelYear) {
 
         AndroidNetworking.initialize(activity);
-        AndroidNetworking.get(BASE + "/{modelyear}")
-                .addQueryParameter("modelyear", modelYear)
+        AndroidNetworking.get(BASE + "/modelyear/" + modelYear)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -103,7 +106,8 @@ public class NcapApi {
 
                     @Override
                     public void onError(ANError anError) {
-                        anError.printStackTrace();
+                        Toast.makeText(ActivityBrand.progressBar.getContext(),"Upps! An Error Occured.", Toast.LENGTH_SHORT).show();
+                        ActivityBrand.progressBar.setVisibility(View.GONE);
                     }
                 });
     }
@@ -111,9 +115,7 @@ public class NcapApi {
     public static void getModels(final Activity activity, String modelYear, String make) {
 
         AndroidNetworking.initialize(activity);
-        AndroidNetworking.get(BASE + "/{modelyear}/{make}")
-                .addQueryParameter("modelyear", modelYear)
-                .addQueryParameter("make", make)
+        AndroidNetworking.get(BASE + "/modelyear/" + modelYear + "/make/" + make)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -144,7 +146,8 @@ public class NcapApi {
 
                     @Override
                     public void onError(ANError anError) {
-                        anError.printStackTrace();
+                        Toast.makeText(ActivityModel.progressBar.getContext(),"Upps! An Error Occured.", Toast.LENGTH_SHORT).show();
+                        ActivityModel.progressBar.setVisibility(View.GONE);
                     }
                 });
     }
@@ -152,10 +155,7 @@ public class NcapApi {
     public static void getVehicleId(final Activity activity, String modelYear, String make, String model) {
 
         AndroidNetworking.initialize(activity);
-        AndroidNetworking.get(BASE + "/{modelyear}/{make}/{model}")
-                .addQueryParameter("modelyear", modelYear)
-                .addQueryParameter("make", make)
-                .addQueryParameter("model", model)
+        AndroidNetworking.get(BASE + "/modelyear/" + modelYear + "/make/" + make + "/model/" + model)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -187,15 +187,15 @@ public class NcapApi {
 
                     @Override
                     public void onError(ANError anError) {
-                        anError.printStackTrace();
+                        Toast.makeText(ActivityVehicle.progressBar.getContext(),"Upps! An Error Occured.", Toast.LENGTH_SHORT).show();
+                        ActivityVehicle.progressBar.setVisibility(View.GONE);
                     }
                 });
     }
 
     public static void getNcapData(final Activity activity, String VehicleId) {
         AndroidNetworking.initialize(activity);
-        AndroidNetworking.get(BASE + "/{VehicleId}")
-                .addQueryParameter("VehicleId", VehicleId)
+        AndroidNetworking.get(BASE + "/VehicleId/" + VehicleId)
                 .setPriority(Priority.HIGH)
                 .build()
                 .getAsJSONObject(new JSONObjectRequestListener() {
@@ -238,7 +238,7 @@ public class NcapApi {
                             try {
                                 ncap.setVehiclePicture(NcapUtils.checkImage(jsonObject.getString("VehiclePicture")));
                             } catch (JSONException e) {
-                                ncap.setVehiclePicture(NO_IMAGE_FOUND);
+                                ncap.setVehiclePicture("https://www.clicpeugeot.com/back/PhotoHandler.ashx?id=524566&prop=photo1&format=default");
                                 e.printStackTrace();
                             }
                             try {
@@ -287,11 +287,19 @@ public class NcapApi {
                             try {
                                 ncap.setFrontCrashPicture(NcapUtils.checkImage(jsonObject.getString("FrontCrashPicture")));
                             } catch (JSONException e) {
-                                ncap.setFrontCrashPicture(NO_IMAGE_FOUND);
+                                ncap.setFrontCrashPicture("https://www.clicpeugeot.com/back/PhotoHandler.ashx?id=524566&prop=photo1&format=default");
                                 e.printStackTrace();
                             }
                             try {
-                                ncap.setFrontCrashVideo(NcapUtils.checkJson(jsonObject.getString("FrontCrashVideo")));
+                                String vidUrl = NcapUtils.checkJson(jsonObject.getString("FrontCrashVideo"));
+                                Log.i("VIDEO","https" + vidUrl.substring(4));
+                                if (vidUrl.contains("http")){
+                                    ncap.setFrontCrashVideo("https" + vidUrl.substring(4));
+                                }
+                                else{
+                                    ncap.setFrontCrashVideo(vidUrl);
+                                }
+
                             } catch (JSONException e) {
                                 ncap.setFrontCrashVideo(ERROR);
                                 e.printStackTrace();
@@ -330,11 +338,19 @@ public class NcapApi {
                             try {
                                 ncap.setSideCrashPicture(NcapUtils.checkImage(jsonObject.getString("SideCrashPicture")));
                             } catch (JSONException e) {
-                                ncap.setSideCrashPicture(NO_IMAGE_FOUND);
+                                ncap.setSideCrashPicture("https://www.clicpeugeot.com/back/PhotoHandler.ashx?id=524566&prop=photo1&format=default");
                                 e.printStackTrace();
                             }
                             try {
-                                ncap.setSideCrashVideo(NcapUtils.checkJson(jsonObject.getString("SideCrashVideo")));
+                                String vidUrl = NcapUtils.checkJson(jsonObject.getString("SideCrashVideo"));
+                                Log.i("VIDEO","https" + vidUrl.substring(4));
+                                if (vidUrl.contains("http")){
+                                    ncap.setSideCrashVideo("https" + vidUrl.substring(4));
+                                }
+                                else{
+                                    ncap.setSideCrashVideo(vidUrl);
+                                }
+
                             } catch (JSONException e) {
                                 ncap.setSideCrashVideo(ERROR);
                                 e.printStackTrace();
@@ -349,11 +365,21 @@ public class NcapApi {
                             try {
                                 ncap.setSidePolePicture(NcapUtils.checkImage(jsonObject.getString("SidePolePicture")));
                             } catch (JSONException e) {
-                                ncap.setSidePolePicture(NO_IMAGE_FOUND);
+                                ncap.setSidePolePicture("https://www.clicpeugeot.com/back/PhotoHandler.ashx?id=524566&prop=photo1&format=default");
                                 e.printStackTrace();
                             }
                             try {
-                                ncap.setSidePoleVideo(NcapUtils.checkJson(jsonObject.getString("SidePoleVideo")));
+
+                                String vidUrl = NcapUtils.checkJson(jsonObject.getString("SidePoleVideo"));
+                                Log.i("VIDEO","https" + vidUrl.substring(4));
+                                if (vidUrl.contains("http")){
+                                    ncap.setSidePoleVideo("https" + vidUrl.substring(4));
+                                }
+                                else{
+                                    ncap.setSidePoleVideo(vidUrl);
+                                }
+
+
                             } catch (JSONException e) {
                                 ncap.setSidePoleVideo(ERROR);
                                 e.printStackTrace();
@@ -365,7 +391,8 @@ public class NcapApi {
 
                     @Override
                     public void onError(ANError anError) {
-                        anError.printStackTrace();
+                        Toast.makeText(ActivityNcap.progressBar.getContext(),"Upps! An Error Occured.", Toast.LENGTH_SHORT).show();
+                        ActivityNcap.progressBar.setVisibility(View.GONE);
                     }
                 });
     }

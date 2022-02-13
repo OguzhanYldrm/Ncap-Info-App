@@ -1,4 +1,4 @@
-package com.ncap.ncapbilgi.adaptor;
+package com.ncap.ncapbilgi.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,38 +11,36 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ncap.ncapbilgi.R;
-import com.ncap.ncapbilgi.model.Model;
-import com.ncap.ncapbilgi.view.ActivityVehicle;
+import com.ncap.ncapbilgi.model.Brand;
+import com.ncap.ncapbilgi.view.ActivityModel;
 
 import java.util.ArrayList;
 
-public class ModelAdaptor extends RecyclerView.Adapter<ModelAdaptor.MyViewHolder> {
+public class BrandAdapter extends RecyclerView.Adapter<BrandAdapter.MyViewHolder> {
 
-    private ArrayList<Model> models;
+    private ArrayList<Brand> brands;
     private Activity context;
     private String modelYear;
-    private String brand;
 
-    public ModelAdaptor( Activity context,ArrayList<Model> models,String modelYear,String brand) {
-        this.models = models;
+    public BrandAdapter(Activity context, ArrayList<Brand> brands, String modelYear) {
+        this.brands = brands;
         this.context = context;
         this.modelYear = modelYear;
-        this.brand = brand;
     }
 
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_models, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_text, viewGroup, false);
 
         final MyViewHolder myViewHolder = new MyViewHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(context, ActivityVehicle.class);
-                intent.putExtra("brand",brand);
+                Intent intent = new Intent(context, ActivityModel.class);
+
                 intent.putExtra("givenYear",modelYear);
-                intent.putExtra("model",models.get(myViewHolder.getAdapterPosition()).getModel());
+                intent.putExtra("brand",brands.get(myViewHolder.getAdapterPosition()).getBrand());
                 context.startActivity(intent);
             }
         });
@@ -50,23 +48,23 @@ public class ModelAdaptor extends RecyclerView.Adapter<ModelAdaptor.MyViewHolder
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ModelAdaptor.MyViewHolder viewHolder, int position) {
-        viewHolder.modelText.setText(models.get(position).getModel());
+    public void onBindViewHolder(@NonNull BrandAdapter.MyViewHolder viewHolder, int position) {
+        viewHolder.brandText.setText(brands.get(position).getBrand());
 
     }
 
     @Override
     public int getItemCount() {
-        return models.size();
+        return brands.size();
     }
 
 
     public static class MyViewHolder extends RecyclerView.ViewHolder{
-        private TextView modelText;
+        private TextView brandText;
 
         public MyViewHolder(View view) {
             super(view);
-            modelText = view.findViewById(R.id.modelText);
+            brandText = view.findViewById(R.id.tvValue);
 
         }
     }

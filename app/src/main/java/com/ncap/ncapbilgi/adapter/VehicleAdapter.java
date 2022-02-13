@@ -1,4 +1,4 @@
-package com.ncap.ncapbilgi.adaptor;
+package com.ncap.ncapbilgi.adapter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -16,12 +16,12 @@ import com.ncap.ncapbilgi.view.ActivityNcap;
 
 import java.util.ArrayList;
 
-public class VehicleAdaptor extends RecyclerView.Adapter<VehicleAdaptor.MyViewHolder> {
+public class VehicleAdapter extends RecyclerView.Adapter<VehicleAdapter.MyViewHolder> {
 
     private ArrayList<Vehicle> vehicles;
     private Activity context;
 
-    public VehicleAdaptor( Activity context,ArrayList<Vehicle> vehicles) {
+    public VehicleAdapter(Activity context, ArrayList<Vehicle> vehicles) {
         this.vehicles = vehicles;
         this.context = context;
     }
@@ -29,7 +29,7 @@ public class VehicleAdaptor extends RecyclerView.Adapter<VehicleAdaptor.MyViewHo
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
-        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_vehicles, viewGroup, false);
+        View view = LayoutInflater.from(viewGroup.getContext()).inflate(R.layout.item_text, viewGroup, false);
 
         final MyViewHolder myViewHolder = new MyViewHolder(view);
         view.setOnClickListener(new View.OnClickListener() {
@@ -44,7 +44,7 @@ public class VehicleAdaptor extends RecyclerView.Adapter<VehicleAdaptor.MyViewHo
     }
 
     @Override
-    public void onBindViewHolder(@NonNull VehicleAdaptor.MyViewHolder viewHolder, int position) {
+    public void onBindViewHolder(@NonNull VehicleAdapter.MyViewHolder viewHolder, int position) {
         viewHolder.VehicleDescriptionText.setText(vehicles.get(position).getVehicleDescription());
 
     }
@@ -61,7 +61,7 @@ public class VehicleAdaptor extends RecyclerView.Adapter<VehicleAdaptor.MyViewHo
 
         public MyViewHolder(View view) {
             super(view);
-            VehicleDescriptionText = view.findViewById(R.id.VehicleDescriptionText);
+            VehicleDescriptionText = view.findViewById(R.id.tvValue);
 
         }
     }

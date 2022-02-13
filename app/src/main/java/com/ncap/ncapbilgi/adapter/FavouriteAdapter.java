@@ -1,7 +1,6 @@
-package com.ncap.ncapbilgi.adaptor;
+package com.ncap.ncapbilgi.adapter;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,22 +12,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.ncap.ncapbilgi.R;
-import com.ncap.ncapbilgi.model.Model;
 import com.ncap.ncapbilgi.model.Ncap;
 import com.ncap.ncapbilgi.utils.NcapUtils;
 import com.ncap.ncapbilgi.view.ActivityFavourites;
-import com.ncap.ncapbilgi.view.ActivityVehicle;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class FavouriteAdaptor extends RecyclerView.Adapter<FavouriteAdaptor.MyViewHolder> {
+public class FavouriteAdapter extends RecyclerView.Adapter<FavouriteAdapter.MyViewHolder> {
 
     private List<Ncap> favs;
     private Activity context;
 
-    public FavouriteAdaptor(Activity context, List<Ncap> favs) {
+    public FavouriteAdapter(Activity context, List<Ncap> favs) {
         this.favs = favs;
         this.context = context;
     }
@@ -43,7 +40,7 @@ public class FavouriteAdaptor extends RecyclerView.Adapter<FavouriteAdaptor.MyVi
     }
 
     @Override
-    public void onBindViewHolder(@NonNull FavouriteAdaptor.MyViewHolder viewHolder, final int position) {
+    public void onBindViewHolder(@NonNull FavouriteAdapter.MyViewHolder viewHolder, final int position) {
         Picasso.get().load(favs.get(position).getVehiclePicture()).into(viewHolder.carImage);
         viewHolder.carDescription.setText(favs.get(position).getVehicleDescription());
         viewHolder.carRating.setRating(Float.parseFloat(favs.get(position).getOverallRating()));

@@ -11,9 +11,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.ncap.ncapbilgi.R;
-import com.ncap.ncapbilgi.adaptor.BrandAdaptor;
+import com.ncap.ncapbilgi.adapter.BrandAdapter;
 import com.ncap.ncapbilgi.model.Brand;
 import com.ncap.ncapbilgi.service.NcapApi;
 
@@ -22,14 +29,27 @@ import java.util.ArrayList;
 public class ActivityBrand extends AppCompatActivity {
 
     private static RecyclerView brandList;
-    private static BrandAdaptor brandAdaptor;
+    private static BrandAdapter brandAdapter;
     private static ArrayList<Brand> brands;
     private static String modelYear;
+    private AdView mAdView;
+    public static ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_brand);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
+
 
         Intent intent = getIntent();
         modelYear = intent.getStringExtra("givenYear");
@@ -63,16 +83,18 @@ public class ActivityBrand extends AppCompatActivity {
         brandList.setLayoutManager(layoutManager);
         brandList.setItemAnimator(new DefaultItemAnimator());
 
+        progressBar = findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
         NcapApi.getBrands(ActivityBrand.this,modelYear);
 
     }
 
     public static void setBrands(Activity activity, ArrayList<Brand> givenBrands) {
+        progressBar.setVisibility(View.GONE);
         brands = new ArrayList<>(givenBrands);
-        brandAdaptor = new BrandAdaptor(activity,brands,modelYear);
-        brandList.setAdapter(brandAdaptor);
-
-        brandAdaptor.notifyDataSetChanged();
+        brandAdapter = new BrandAdapter(activity,brands,modelYear);
+        brandList.setAdapter(brandAdapter);
+        brandAdapter.notifyDataSetChanged();
 
     }
 }

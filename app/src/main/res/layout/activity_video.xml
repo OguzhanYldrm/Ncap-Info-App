@@ -16,7 +16,7 @@
 
     <include
         android:id="@+id/middle_page_toolbar"
-        layout="@layout/toolbar_middlepages" />
+        layout="@layout/toolbar_ncap" />
 
 
 

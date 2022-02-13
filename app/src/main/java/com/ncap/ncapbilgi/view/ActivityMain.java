@@ -14,11 +14,17 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.blogspot.atifsoftwares.animatoolib.Animatoo;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+import com.google.android.gms.ads.initialization.InitializationStatus;
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener;
 import com.ncap.ncapbilgi.R;
-import com.ncap.ncapbilgi.adaptor.ModelYearAdaptor;
+import com.ncap.ncapbilgi.adapter.ModelYearAdapter;
 import com.ncap.ncapbilgi.model.Year;
 import com.ncap.ncapbilgi.service.NcapApi;
 
@@ -29,11 +35,23 @@ public class ActivityMain extends AppCompatActivity {
     private static ListView listView;
     private long backPressedTime;
     Toast backToast;
+    private AdView mAdView;
+    public static ProgressBar progressBar;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dashboard);
+        MobileAds.initialize(this, new OnInitializationCompleteListener() {
+            @Override
+            public void onInitializationComplete(InitializationStatus initializationStatus) {
+
+            }
+        });
+        mAdView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        mAdView.loadAd(adRequest);
 
         Animatoo.animateCard(this);
 
@@ -46,12 +64,6 @@ public class ActivityMain extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
-                    case R.id.action_profile:
-                        Toast.makeText(ActivityMain.this,"Profile Clicked",Toast.LENGTH_SHORT).show();
-                        break;
-                    case R.id.action_exit:
-                        exitApp();
-                        break;
                     case R.id.action_favs:
                         Intent intent = new Intent(ActivityMain.this, ActivityFavourites.class);
                         ActivityMain.this.startActivity(intent);
@@ -63,6 +75,8 @@ public class ActivityMain extends AppCompatActivity {
 
         listView = findViewById(R.id.listView);
 
+        progressBar = findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
         NcapApi.getYears(ActivityMain.this);
 
     }
@@ -84,10 +98,11 @@ public class ActivityMain extends AppCompatActivity {
     }
 
     public static void setYears(final Activity activity, final List<Year> yearList){
+        progressBar.setVisibility(View.GONE);
             //get year list
-            ModelYearAdaptor modelYearAdaptor = new ModelYearAdaptor(activity, yearList);
+            ModelYearAdapter modelYearAdapter = new ModelYearAdapter(activity, yearList);
 
-            listView.setAdapter(modelYearAdaptor);
+            listView.setAdapter(modelYearAdapter);
 
             listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                 @Override

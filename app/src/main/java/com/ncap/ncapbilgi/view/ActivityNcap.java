@@ -4,6 +4,8 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -34,6 +36,7 @@ public class ActivityNcap extends AppCompatActivity {
     private static Bundle bundle;
     private static List<Ncap> favouriteList;
     private static boolean favExistance;
+    public static ProgressBar progressBar;
 
 
     @Override
@@ -60,8 +63,6 @@ public class ActivityNcap extends AppCompatActivity {
                 favExistance = true;
             }
         }
-
-        NcapApi.getNcapData(ActivityNcap.this, vehicleId);
 
         //Toolbar
         Toolbar toolbar = findViewById(R.id.ncap_toolbar);
@@ -92,11 +93,14 @@ public class ActivityNcap extends AppCompatActivity {
         });
         toolbar.inflateMenu(R.menu.menu_ncap);
 
+        progressBar = findViewById(R.id.progress);
+        progressBar.setVisibility(View.VISIBLE);
+        NcapApi.getNcapData(ActivityNcap.this, vehicleId);
     }
 
 
     public static void setNcaps(Ncap carNcap) {
-
+        progressBar.setVisibility(View.GONE);
         if (!favExistance){
             favouriteList.add(carNcap);
         }
