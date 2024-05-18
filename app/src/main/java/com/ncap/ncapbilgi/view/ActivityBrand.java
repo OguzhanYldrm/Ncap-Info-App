@@ -63,12 +63,9 @@ public class ActivityBrand extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                switch (item.getItemId()){
-
-                    case R.id.back_icon:
-                        Intent intent = new Intent(ActivityBrand.this, ActivityMain.class);
-                        ActivityBrand.this.startActivity(intent);
-                        break;
+                if (item.getItemId() == R.id.back_icon) {
+                    Intent intent = new Intent(ActivityBrand.this, ActivityMain.class);
+                    ActivityBrand.this.startActivity(intent);
                 }
                 return true;
             }

@@ -64,13 +64,10 @@ public class ActivityModel extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                switch (item.getItemId()){
-
-                    case R.id.back_icon:
-                        Intent intent = new Intent(ActivityModel.this, ActivityBrand.class);
-                        intent.putExtra("givenYear",modelYear);
-                        ActivityModel.this.startActivity(intent);
-                        break;
+                if (item.getItemId() == R.id.back_icon) {
+                    Intent intent = new Intent(ActivityModel.this, ActivityBrand.class);
+                    intent.putExtra("givenYear",modelYear);
+                    ActivityModel.this.startActivity(intent);
                 }
                 return true;
             }

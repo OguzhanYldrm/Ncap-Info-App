@@ -63,11 +63,9 @@ public class ActivityMain extends AppCompatActivity {
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_favs:
-                        Intent intent = new Intent(ActivityMain.this, ActivityFavourites.class);
-                        ActivityMain.this.startActivity(intent);
-                        break;
+                if (item.getItemId() == R.id.action_favs) {
+                    Intent intent = new Intent(ActivityMain.this, ActivityFavourites.class);
+                    ActivityMain.this.startActivity(intent);
                 }
                 return true;
             }

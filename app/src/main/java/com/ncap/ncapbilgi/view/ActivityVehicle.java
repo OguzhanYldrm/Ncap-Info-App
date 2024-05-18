@@ -65,14 +65,11 @@ public class ActivityVehicle extends AppCompatActivity {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
 
-                switch (item.getItemId()){
-
-                    case R.id.back_icon:
+                if (item.getItemId() == R.id.back_icon) {
                         Intent intent = new Intent(ActivityVehicle.this, ActivityModel.class);
                         intent.putExtra("givenYear",modelYear);
                         intent.putExtra("brand",brand);
                         ActivityVehicle.this.startActivity(intent);
-                        break;
                 }
                 return true;
             }

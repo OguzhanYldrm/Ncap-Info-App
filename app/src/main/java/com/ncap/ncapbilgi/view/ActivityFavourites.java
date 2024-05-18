@@ -50,12 +50,9 @@ public class ActivityFavourites extends AppCompatActivity {
         toolbar.setSubtitleTextColor(Color.WHITE);
         toolbar.setOnMenuItemClickListener(item -> {
 
-            switch (item.getItemId()){
-
-                case R.id.back_icon:
-                    Intent intent = new Intent(ActivityFavourites.this, ActivityMain.class);
-                    ActivityFavourites.this.startActivity(intent);
-                    break;
+            if (item.getItemId() == R.id.back_icon) {
+                Intent intent = new Intent(ActivityFavourites.this, ActivityMain.class);
+                ActivityFavourites.this.startActivity(intent);
             }
             return true;
         });
