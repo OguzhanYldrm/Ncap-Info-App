@@ -3,7 +3,7 @@ plugins {
 }
 
 def currentVersion = "1.2.1"
-def currentVersionCode = 15
+def currentVersionCode = 16
 
 android {
     namespace 'com.ncap.ncapbilgi'
